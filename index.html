@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="chapter-title">
+    chap-1: good
+  </div>
+  <div id="chapter-container">
+    <p>line:1</p>
+    <p>line:2</p>
+    <p>line:3</p>
+  </div>
+
+  <button onclick="copy();">COPY</button>
+
+  <a href="" class="button nextchap" onclick="console.log(`cl`)">dsa</a>
+  <a href="" class="button prevchap" onclick="console.log(`cl`)">dsa</a>
+
+  <textarea id="txt1"></textarea>
+  <button onclick="txt1();"> TXT 1</button>
+  <p id="belgi">BELGI</p>
+  <script src="in.js"></script>
+  <script>
+
+ShadowSlaveChaps_From[0] = [];
+ShadowSlaveChaps_From[0][0] = `A frail-looking young man with pale skin and dark circles under his eyes was sitting on a rusty bench across from the police station. He was cradling a cup of coffee in his hands — not the cheap synthetic type slum rats like him had access to, but the real deal. This cup of plant-based coffee, usually available only to higher rank citizens, had cost most of his savings. But on this particular day, Sunny decided to pamper himself.`;
+/*ShadowSlaveChaps_From[0] = [
+  `A`,
+  `frail-looking`,
+  `young`,
+  `man`,
+  `with`,
+  `pale`,
+  `skin`,
+  `and`,
+  `dark`,
+  `circles`,
+  `under`,
+  `his`,
+  `eyes`,
+  `was`,
+  `sitting`,
+  `on`,
+];*/
+let count = 0;
+    go();
+    function go() {
+      console.clear();      
+      console.log(ShadowSlaveChaps_From[0][count])
+      TextToSpeech(( ShadowSlaveChaps_From[0][count] ),"en").then(() => {
+        count++;
+        if (count < ShadowSlaveChaps_From[0].length) {
+          go();
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+
+    /*ShadowSlaveChaps_From[0].forEach(element => {
+      TextToSpeech(( element ),"en").then(() => {
+        console.clear();
+        console.log(element)
+      })
+      .catch(error => console.error('Error:', error));
+      });*/
+/*
+    // GO TO NEXT PAGE  
+    document.querySelector(`.nextchap`).click();
+
+    // GO TO NEXT PAGE  
+    document.querySelector(`.prevchap`).click();
+*/
+
+   // localStorage.setItem("ff", JSON.stringify("dddddddd"));
+    console.log(JSON.parse(localStorage.getItem("ff")))
+
+//s
+    SowData();
+
+    ///
+    ///
+    ///
+    function TextToFile() {
+
+      let NameLocalServer = "LocalServerForShadowSlave";
+      let AllChaps = [];
+      AllChaps = JSON.parse(localStorage.getItem(NameLocalServer));
+      console.log(AllChaps);
+      const link = document.createElement("a");
+      const content = JSON.stringify(AllChaps);
+      const file = new Blob([content], { type: 'text/plain' });
+      link.href = URL.createObjectURL(file);
+      link.download = "ShadowSlave.txt";
+      link.click();
+      URL.revokeObjectURL(link.href);
+
+    }
+    ///
+    ///
+    ///
+    function txt1() {
+      
+      let AllChaps = [];
+      const txt1 = document.getElementById("txt1").value;
+      AllChaps = (JSON.parse(txt1))
+      console.log(AllChaps)
+      
+    }
+    ///
+    ///
+    ///
+    let NameLocalServer = "LocalServerForShadowSlave";
+    let AllChaps = [];
+    AllChaps = JSON.parse(localStorage.getItem(NameLocalServer));
+    console.log(AllChaps);
+
+    ///
+    ///
+    ///
+    function SowData() {
+      
+      let NameLocalServer = "LocalServerForShadowSlave";
+      let AllChaps = [];
+      AllChaps = JSON.parse(localStorage.getItem(NameLocalServer));
+      console.log(AllChaps);
+
+    }
+    ///
+    ///
+    ///
+    function ShowAllParagraphs() {
+      
+      const AllPars = document.getElementById("chapter-container");
+      let NameLocalServer = "LocalServerForShadowSlave";
+      let title = "";
+      let str = "";
+      let AllChaps = [];
+      let answer = [];
+      title = document.querySelector(`.chapter-title`).innerHTML;
+      answer.push(title)
+      str = AllPars.innerHTML;
+      for (let i = 0; i < str.length; i++) {
+        if (str.substr(i, 3) === "<p>") {
+          begins = i;
+        }
+        if (str.substr(i, 4) === "</p>") {
+          ends = i;
+          answer.push(str.substr(begins+3, ends-begins-3));
+        }
+      }     
+      console.table(answer) 
+      if (localStorage.getItem(NameLocalServer) !== null) {
+        AllChaps = (JSON.parse(localStorage.getItem(NameLocalServer)));
+      } 
+        AllChaps.push(answer);
+      localStorage.setItem(NameLocalServer, JSON.stringify(AllChaps));
+      // GO TO NEXT PAGE  
+      document.querySelector(`.nextchap`).click();
+
+    }
+    ///
+    ///
+    ///
+    // Converts Text to Speech {en,uz,ru,kr}
+   /* async function TextToSpeech(text_, lang_) {
+      if ('speechSynthesis' in window) {
+        // Create a new SpeechSynthesisUtterance object
+        var utterance = new SpeechSynthesisUtterance();
+        // Set the text to be spoken
+        utterance.text = text_;
+        // Specify Korean as the language
+        if (lang_ === "kr") {
+          utterance.lang = 'ko-KR';
+        } else if (lang_ === "uz") {
+          utterance.lang = 'uz-UZ'; // Set language to Uzbek
+        } else if (lang_ === "en") {
+          utterance.lang = 'en-US'; // Set language to English
+        } else if (lang_ === "ru") {
+          utterance.lang = 'ru-RU'; // Set language to Russian
+        }
+        // Speak the text
+        speechSynthesis.speak(utterance);
+      } else {
+        // If speech synthesis is not supported, alert the user
+        alert('Sorry, your browser does not support speech synthesis.');
+      }
+    }*/
+    
+    async function TextToSpeech(text) {
+    // speechSynthesis obyekti mavjudligini tekshirish
+    if ('speechSynthesis' in window) {
+        // SpeechSynthesisUtterance obyektini yaratish
+        let utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.9;
+        /*utterance.onboundary = (event) => {
+          const charIndex = event.charIndex;
+          const CurentChar = text[charIndex];
+          document.getElementById("belgi").innerHTML = CurentChar;
+        }*/
+       utterance.onboundary = (event) => {
+        if (event.name === "word") {
+          const wordStart = event.charIndex;
+          const wordEnd = wordStart + event.charLength;
+          const currentWord = text.slice(wordStart, wordEnd);
+          document.getElementById("belgi").innerHTML = currentWord;
+        }
+       }
+        // Ovozni chiqarish
+        window.speechSynthesis.speak(utterance);
+
+        // Ovoz chiqarilishini kutish
+        return new Promise((resolve) => {
+            utterance.onend = () => {
+                resolve('Speech synthesis finished.');
+            };
+        });
+    } else {
+        throw new Error('Speech synthesis not supported in this browser.');
+    }
+}
+    ///
+    ///
+    ///
+  </script>
+</body>
+</html>
